@@ -1,0 +1,10 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: frontier-ai-frontend:latest
+    container_name: frontier-ai-frontend
+    ports:
+      - "8091:80"
+    restart: unless-stopped
