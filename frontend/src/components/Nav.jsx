@@ -10,7 +10,8 @@ function Nav() {
   return (
     <header className="nav">
       <NavLink to="/" className="nav-brand" end>
-        Frontier AI
+        <span className="nav-brand-line">Frontier AI</span>{' '}
+        <span className="nav-brand-line">Deployment Company</span>
       </NavLink>
       <nav className="nav-links">
         {links.map((link) => (

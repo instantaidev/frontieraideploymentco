@@ -9,16 +9,11 @@ function Home() {
       <section className="hero">
         <div className="glow" aria-hidden="true" />
         <div className="hero-content">
-          <span className="badge">
-            <span className="dot" />
-            Coming soon
-          </span>
           <h1 className="title">
             Frontier AI
             <br />
             Deployment Company
           </h1>
-          <p className="tagline">Launching soon.</p>
         </div>
       </section>
 
@@ -75,7 +70,7 @@ function Home() {
 
       <section className="cta-section" id="contact">
         <h2>Let's build what's next.</h2>
-        <p>We're launching soon — reach out to be one of the first to work with us.</p>
+        <p>Reach out to talk through where AI can move the needle for your business.</p>
         <a className="cta-button" href="mailto:hello@frontierdeploy.co">
           Get in touch
         </a>
