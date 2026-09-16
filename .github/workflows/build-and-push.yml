@@ -37,7 +37,7 @@ jobs:
         id: vars
         run: |
           echo "sha_tag=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
-          echo "image=${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.AR_REPOSITORY }}/frontend" >> "$GITHUB_OUTPUT"
+          echo "image=${{ vars.GCP_REGION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.AR_REPOSITORY }}/frontier-ai-frontend" >> "$GITHUB_OUTPUT"
 
       - name: Build and push
         uses: docker/build-push-action@v6
