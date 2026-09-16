@@ -1,5 +1,7 @@
 :root {
   --bg: #05060a;
+  --surface: rgba(255, 255, 255, 0.03);
+  --border: rgba(255, 255, 255, 0.08);
   --fg: #f5f7fa;
   --muted: #8a93a6;
   --accent: #5b8cff;
@@ -12,10 +14,8 @@
   padding: 0;
 }
 
-html,
-body,
-#root {
-  height: 100%;
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -26,19 +26,126 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.page {
-  position: relative;
-  min-height: 100%;
+a {
+  color: inherit;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface);
+  backdrop-filter: blur(6px);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgba(91, 140, 255, 0.6);
+  animation: blink 2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(91, 140, 255, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(91, 140, 255, 0);
+  }
+}
+
+/* ---------- Nav ---------- */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 16px clamp(20px, 4vw, 48px);
+  background: rgba(5, 6, 10, 0.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.nav-brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--fg) 40%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-right: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--fg);
+}
+
+.nav-link.active {
+  color: var(--fg);
+  border-bottom-color: var(--accent);
+}
+
+.nav-cta {
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--bg);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  padding: 8px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(91, 140, 255, 0.3);
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 24px;
+  padding: 48px 24px;
   overflow: hidden;
 }
 
-/* Ambient gradient glow behind the content */
 .glow {
   position: absolute;
   top: 50%;
@@ -69,44 +176,10 @@ body {
   }
 }
 
-.content {
+.hero-content {
   position: relative;
   z-index: 1;
   max-width: 720px;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(6px);
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 0 rgba(91, 140, 255, 0.6);
-  animation: blink 2s ease-in-out infinite;
-}
-
-@keyframes blink {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(91, 140, 255, 0.6);
-  }
-  50% {
-    box-shadow: 0 0 0 6px rgba(91, 140, 255, 0);
-  }
 }
 
 .title {
@@ -127,9 +200,258 @@ body {
   letter-spacing: 0.01em;
 }
 
-.footer {
+/* ---------- Overview sections (Home) ---------- */
+
+.overview-section {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 64px clamp(20px, 4vw, 48px);
+  border-top: 1px solid var(--border);
+}
+
+.section-header {
+  margin-bottom: 32px;
+  max-width: 640px;
+}
+
+.section-header h2 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+
+.section-header p {
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+
+.teaser-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.teaser-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.teaser-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(91, 140, 255, 0.4);
+  background: rgba(91, 140, 255, 0.06);
+}
+
+.teaser-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.teaser-card p {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.teaser-link {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ---------- CTA section (Home) ---------- */
+
+.cta-section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 80px 24px 96px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+.cta-section h2 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  margin-bottom: 12px;
+  letter-spacing: -0.01em;
+}
+
+.cta-section p {
+  color: var(--muted);
+  margin-bottom: 28px;
+  font-size: 1.02rem;
+}
+
+.cta-button {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--bg);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  padding: 14px 32px;
+  border-radius: 999px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(91, 140, 255, 0.35);
+}
+
+/* ---------- Offerings detail pages ---------- */
+
+.offerings-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 64px clamp(20px, 4vw, 48px) 96px;
+}
+
+.page-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.page-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--fg) 40%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.page-intro {
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.offerings-grid {
+  display: grid;
+  /* min() lets the track shrink below 320px on narrow phones instead of
+     forcing horizontal page overflow. */
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
+  gap: 20px;
+}
+
+.offering-card {
+  padding: 28px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  scroll-margin-top: 96px;
+}
+
+.offering-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.offering-description {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.offering-highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.offering-highlights li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  color: var(--fg);
+}
+
+.offering-highlights li::before {
+  content: '';
   position: absolute;
-  bottom: 24px;
+  left: 0;
+  top: 0.5em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 24px clamp(20px, 4vw, 48px) 32px;
+  border-top: 1px solid var(--border);
   font-size: 13px;
-  color: rgba(138, 147, 166, 0.6);
+  color: rgba(138, 147, 166, 0.7);
+}
+
+.site-footer a {
+  text-decoration: none;
+  color: rgba(138, 147, 166, 0.7);
+  transition: color 0.2s ease;
+}
+
+.site-footer a:hover {
+  color: var(--fg);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 720px) {
+  .nav {
+    gap: 12px 16px;
+    padding: 12px clamp(16px, 4vw, 48px);
+  }
+
+  .nav-brand {
+    font-size: 1rem;
+  }
+
+  /* Brand and CTA share the first row; links get their own row below,
+     kept on a single line so the sticky header stays compact. */
+  .nav-links {
+    order: 3;
+    width: 100%;
+    gap: 16px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    font-size: 0.82rem;
+    white-space: nowrap;
+    padding: 2px 0;
+  }
+
+  .nav-cta {
+    font-size: 0.82rem;
+    padding: 7px 14px;
+  }
 }
