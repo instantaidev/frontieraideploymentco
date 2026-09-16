@@ -1,4 +1,4 @@
-name: Build and Push to Artifact Registry
+name: Build, Push and Deploy
 
 on:
   push:
@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-push:
+  build-push-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,3 +48,21 @@ jobs:
           tags: |
             ${{ steps.vars.outputs.image }}:${{ steps.vars.outputs.sha_tag }}
             ${{ steps.vars.outputs.image }}:latest
+
+      # Cloud Run resolves a tag to a digest once, at deploy time, and pins the
+      # revision to it. Pushing a new :latest does NOT update a running service,
+      # so deploy the immutable SHA tag explicitly on every merge.
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy ${{ vars.CLOUD_RUN_SERVICE }} \
+            --image "${{ steps.vars.outputs.image }}:${{ steps.vars.outputs.sha_tag }}" \
+            --region "${{ vars.GCP_REGION }}" \
+            --project "${{ vars.GCP_PROJECT_ID }}" \
+            --quiet
+
+      - name: Report deployed revision
+        run: |
+          gcloud run services describe ${{ vars.CLOUD_RUN_SERVICE }} \
+            --region "${{ vars.GCP_REGION }}" \
+            --project "${{ vars.GCP_PROJECT_ID }}" \
+            --format="value(status.latestReadyRevisionName, status.url)"
