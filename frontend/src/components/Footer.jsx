@@ -1,8 +1,18 @@
+import { company, footerLinks } from '../data/site.js'
+
 function Footer() {
   return (
     <footer className="site-footer">
-      <span>© {new Date().getFullYear()} Frontier AI Deployment Company</span>
-      <a href="mailto:hello@frontierdeploy.co">hello@frontierdeploy.co</a>
+      <span>
+        {company.name} — {company.site}
+      </span>
+      <span className="footer-links">
+        {footerLinks.map((link) => (
+          <a key={link.href} href={link.href}>
+            {link.label}
+          </a>
+        ))}
+      </span>
     </footer>
   )
 }
